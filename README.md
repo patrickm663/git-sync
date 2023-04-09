@@ -7,7 +7,7 @@ By using `git remote update; git status -uno`, the local repo is checked against
 
 ## Prerequistes
 1. Environment to run Bash scripts
-2. Git and sed installed
+2. Git, grep, and sed installed (should be available on most UNIX and GNU/Linux devices)
 
 ## How to Use
 The script can be run as follows:
