@@ -25,4 +25,4 @@ If updates are available, enter `y` again to pull changes from remote.
 - [ ] Implement further tests on different environments
 
 ## Licence
-Licenced under BSD Clause-3.
+Licenced under BSD 3-Clause.
