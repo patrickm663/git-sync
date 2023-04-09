@@ -24,5 +24,5 @@ If updates are available, enter `y` again to pull changes from remote.
 - [ ] Add a small `man` page
 - [ ] Implement further tests on different environments
 
-## Licence
+## License
 Licenced under BSD 3-Clause.
