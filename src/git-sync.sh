@@ -41,7 +41,7 @@ pull_repo () {
 
 main () {
   cd ~/
-  for repo in $(find -name ".git")
+  for repo in $(find -name ".git" 2>/dev/null)
   do
     pull_repo $repo
   done
