@@ -1,5 +1,7 @@
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 # git-sync
+_**WIP: A D implementation of the Bash script is being tested.**_
+
 A small utility script to sync local Git repos with remote.
 
 It works by looping over the user's `home/` directory for folders containing a `.git` sub-directory. Users are given an option to check the local repo against remote and, only if the user wants, runs `git pull`.
