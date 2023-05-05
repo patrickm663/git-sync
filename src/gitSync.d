@@ -42,6 +42,7 @@ void main() {
       "Would you like to update? [Y/n]".writeln;
       string response = readln().toLower.strip("\n");
       if (response == "y") {
+        "Updates in progres...".writeln;
         gitPull(reposOutdated);
       } else {
         "Exiting".writeln;
@@ -62,9 +63,17 @@ string getPullStatus(string d) {
 }
 
 void gitPull(string [] d) {
+  int count = 0;
+  string repos = d.length.to!string;
+  string message = "";
   foreach(f; d) {
+    count = count + 1;
+    message = "[" ~ count.to!string ~ "/" ~  repos ~ "] " ~ f; 
+    message.writeln;
+
     string enterDir = "cd " ~ f ~ " && cd ../";
     string pull = enterDir ~ " && git pull"; 
+    
     executeShell(pull);
   } 
   "Complete!".writeln;
