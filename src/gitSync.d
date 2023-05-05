@@ -23,13 +23,13 @@ void main() {
 
     foreach(line; lines) {
       if (line != "") {
-	count += 1;
-	progress = "[" ~ count.to!string ~ "/" ~ reposLength ~ "] " ~ line; 
-	progress.writeln;
-	g = getPullStatus(line);
-	if (g != "NULL") {
-	  reposOutdated ~= g;
-	}
+        count += 1;
+        progress = "[" ~ count.to!string ~ "/" ~ reposLength ~ "] " ~ line; 
+        progress.writeln;
+        g = getPullStatus(line);
+        if (g != "NULL") {
+          reposOutdated ~= g;
+        }
       }
     }
     if (reposOutdated.length == 0) {
@@ -42,9 +42,9 @@ void main() {
       "Would you like to update? [Y/n]".writeln;
       string response = readln().toLower.strip("\n");
       if (response == "y") {
-	gitPull(reposOutdated);
+        gitPull(reposOutdated);
       } else {
-	"Exiting".writeln;
+        "Exiting".writeln;
       }
     }
   }
@@ -62,10 +62,10 @@ string getPullStatus(string d) {
 }
 
 void gitPull(string [] d) {
- foreach(f; d) {
-  string enterDir = "cd " ~ f ~ " && cd ../";
-  string pull = enterDir ~ " && git pull"; 
-  executeShell(pull);
- } 
- "Complete!".writeln;
+  foreach(f; d) {
+    string enterDir = "cd " ~ f ~ " && cd ../";
+    string pull = enterDir ~ " && git pull"; 
+    executeShell(pull);
+  } 
+  "Complete!".writeln;
 }
