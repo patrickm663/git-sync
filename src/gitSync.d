@@ -42,7 +42,7 @@ void main() {
       "Would you like to update? [Y/n]".writeln;
       string response = readln().toLower.strip("\n");
       if (response == "y") {
-        "Updates in progres...".writeln;
+        "Updates in progress...".writeln;
         gitPull(reposOutdated);
       } else {
         "Exiting".writeln;
