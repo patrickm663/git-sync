@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"Patrick Moehrke"
+	],
+	"copyright": "Copyright © 2023, Patrick Moehrke",
+	"description": "A CLI tool for keeping repos up to date.",
+	"license": "MIT",
+	"name": "git-sync"
+}

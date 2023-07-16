@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/git-sync
+git-sync.so
+git-sync.dylib
+git-sync.dll
+git-sync.a
+git-sync.lib
+git-sync-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
