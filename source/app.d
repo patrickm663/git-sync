@@ -19,7 +19,6 @@ void main(string [] args) {
 
     string [] reposOutdated; 
     string progress;
-    string g;
     int count = 0;
 
     foreach(line; lines) {
@@ -27,9 +26,8 @@ void main(string [] args) {
         count += 1;
         progress = "[" ~ count.to!string ~ "/" ~ reposLength ~ "] " ~ line; 
         progress.writeln;
-        g = getPullStatus(line);
-        if (g != "NULL") {
-          reposOutdated ~= g;
+        if (getPullStatus(line)) {
+          reposOutdated ~= line;
         }
       }
     }
@@ -58,20 +56,21 @@ void main(string [] args) {
   }
 }
 
-string getPullStatus(string d) {
+bool getPullStatus(string d) {
   string enterDir = "cd " ~ d ~ " && cd ../";
   string checkStatus = enterDir ~ " && git remote update; git status -uno 2>/dev/null";
   auto r = executeShell(checkStatus).output;
-  if (indexOf(r, "Your branch is up to date") == -1 || indexOf(r, "git push") != -1) {
-    return d;
+  // If the output *is not* 'Your branch is up to date...', contain 'ahead'/'behind', or doesn't have a remote, return true and proceed to track the directories as out-of-date. Else, skip
+  if (indexOf(r, "Your branch is up to date") == -1 && indexOf(r, "ahead") == -1 && indexOf(r, "behind") == -1 && indexOf(r, "No commits yet") == -1 && indexOf(r, "origin") != -1) {
+    return true;
   }
-  return "NULL";
+  return false;
 }
 
 void gitPull(string [] d) {
   int count = 0;
   string repos = d.length.to!string;
-  string message = "";
+  string message;
   foreach(f; d) {
     count = count + 1;
     message = "[" ~ count.to!string ~ "/" ~  repos ~ "] " ~ f; 
