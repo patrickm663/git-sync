@@ -5,10 +5,10 @@ import std.process;
 import std.stdio;
 import std.string;
 
-void main() {
+void main(string [] args) {
   "Searching for Git repos...".writeln;
-  auto res = executeShell("find ~/ -name '.git' 2>/dev/null");
-  res.status.writeln;
+  // By default, exclude hidden folders
+  auto res = executeShell("find ~/* -path '*.git' 2>/dev/null");
   if (res.status != 0) "No Git repos found".writeln; 
   else {
     string [] lines = res.output.split("\n").array;
@@ -40,13 +40,19 @@ void main() {
       reposFoundOutOfDate.writeln;
       "The following repos are out-of-date: ".writeln;
       reposOutdated.join("\n").writeln;
-      "Would you like to update? [Y/n]".writeln;
-      string response = readln().toLower.strip("\n");
-      if (response == "y") {
-        "Updates in progress...".writeln;
-        gitPull(reposOutdated);
-      } else {
-        "Exiting".writeln;
+      string response = "";
+      while (response != "y") {
+	"Would you like to update? [Y/n]".writeln;
+	response = readln().toLower.strip("\n");
+	if (response == "y") {
+	  "Updates in progress...".writeln;
+	  gitPull(reposOutdated);
+	} else if (response == "n") {
+	  "Exiting... Bye!".writeln;
+	  break;
+	} else {
+	  "Invalid response!".writeln;
+	}
       }
     }
   }
@@ -56,8 +62,7 @@ string getPullStatus(string d) {
   string enterDir = "cd " ~ d ~ " && cd ../";
   string checkStatus = enterDir ~ " && git remote update; git status -uno 2>/dev/null";
   auto r = executeShell(checkStatus).output;
-  if (indexOf(r, "Your branch is up to date") == -1) {
-    d.writeln;
+  if (indexOf(r, "Your branch is up to date") == -1 || indexOf(r, "git push") != -1) {
     return d;
   }
   return "NULL";
@@ -74,8 +79,8 @@ void gitPull(string [] d) {
 
     string enterDir = "cd " ~ f ~ " && cd ../";
     string pull = enterDir ~ " && git pull"; 
-    
-    executeShell(pull);
-  } 
+    auto gp = executeShell(pull);
+    gp.output.writeln;
+  }
   "Complete!".writeln;
 }
